@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Топ-4 нейросети для генерации изображений</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #e0f7fa;
+            color: #006064;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #4db6ac, #00897b);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(0, 137, 123, 0.2);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .intro {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 15px rgba(0, 105, 148, 0.1);
+            border-left: 5px solid #4db6ac;
+        }
+        
+        .intro p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+        
+        .networks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(550px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .network-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 105, 148, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .network-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 105, 148, 0.15);
+        }
+        
+        .network-header {
+            background: linear-gradient(to right, #80cbc4, #4db6ac);
+            color: white;
+            padding: 25px;
+        }
+        
+        .network-header h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .network-body {
+            padding: 25px;
+        }
+        
+        .network-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #e0f2f1;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            background-color: #f1f8e9;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .stats-item {
+            text-align: center;
+        }
+        
+        .stats-value {
+            font-weight: bold;
+            font-size: 1.3rem;
+            color: #388e3c;
+        }
+        
+        .pros-cons {
+            display: flex;
+            margin-top: 20px;
+        }
+        
+        .pros, .cons {
+            flex: 1;
+            padding: 20px;
+        }
+        
+        .pros {
+            background-color: #e8f5e9;
+            border-radius: 10px 0 0 10px;
+        }
+        
+        .cons {
+            background-color: #ffebee;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .pros h4, .cons h4 {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .pros h4 {
+            color: #2e7d32;
+        }
+        
+        .cons h4 {
+            color: #c62828;
+        }
+        
+        .pros ul, .cons ul {
+            padding-left: 20px;
+        }
+        
+        .pros li, .cons li {
+            margin-bottom: 10px;
+        }
+        
+        .test-section {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-top: 50px;
+            box-shadow: 0 8px 20px rgba(0, 105, 148, 0.1);
+        }
+        
+        .test-section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #00897b;
+            font-size: 2.2rem;
+        }
+        
+        .question {
+            margin-bottom: 30px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #e0f2f1;
+        }
+        
+        .question h3 {
+            margin-bottom: 20px;
+            color: #006064;
+            font-size: 1.3rem;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .option {
+            background-color: #f1f8e9;
+            padding: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        
+        .option:hover {
+            background-color: #e0f2f1;
+            transform: translateY(-3px);
+        }
+        
+        .option.selected {
+            background-color: #b2dfdb;
+            border: 2px solid #4db6ac;
+        }
+        
+        .test-btn {
+            display: block;
+            margin: 40px auto 0;
+            background: linear-gradient(to right, #4db6ac, #00897b);
+            color: white;
+            border: none;
+            padding: 18px 50px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 137, 123, 0.3);
+        }
+        
+        .test-btn:hover {
+            background: linear-gradient(to right, #00897b, #00695c);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 105, 148, 0.3);
+        }
+        
+        .result {
+            display: none;
+            background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+            padding: 40px;
+            border-radius: 15px;
+            margin-top: 40px;
+            text-align: center;
+            border: 3px solid #4db6ac;
+        }
+        
+        .result h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #006064;
+        }
+        
+        .result-network {
+            font-weight: bold;
+            color: #00897b;
+            font-size: 2.5rem;
+            margin: 20px 0;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .result-description {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+        
+        .restart-btn {
+            background-color: #4db6ac;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+        
+        .restart-btn:hover {
+            background-color: #00897b;
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid #b2dfdb;
+            color: #006064;
+            font-size: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .networks-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pros-cons {
+                flex-direction: column;
+            }
+            
+            .pros, .cons {
+                border-radius: 10px;
+                margin-bottom: 15px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .network-card {
+                margin: 0 10px;
+            }
+            
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .test-section {
+                padding: 25px;
+            }
+        }
+        
+        .feature-icon {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-robot"></i> Топ-4 нейросети для генерации изображений</h1>
+            <p class="subtitle">Обзор самых популярных нейросетей для создания изображений с помощью искусственного интеллекта. Узнайте их преимущества, недостатки и выберите подходящую для вас.</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section class="intro">
+            <p>В эпоху искусственного интеллекта генерация изображений стала доступной каждому. Современные нейросети способны создавать удивительные визуальные произведения по простому текстовому описанию.</p>
+            <p>Мы отобрали 4 лучшие нейросети для генерации изображений, которые завоевали популярность среди миллионов пользователей. У каждой из них есть свои сильные стороны и особенности. Пройдите тест в конце страницы, чтобы узнать, какая нейросеть подходит именно вам!</p>
+        </section>
+        
+        <section class="networks-grid" id="networks">
+            <!-- Карточки нейросетей будут сгенерированы через JavaScript -->
+        </section>
+        
+        <section class="test-section">
+            <h2><i class="fas fa-clipboard-list"></i> Тест: Какая нейросеть подходит вам?</h2>
+            <p style="text-align: center; margin-bottom: 30px; font-size: 1.1rem;">Ответьте на 4 вопроса, чтобы мы могли подобрать нейросеть, которая лучше всего соответствует вашим потребностям.</p>
+            
+            <div id="questions-container">
+                <!-- Вопросы будут добавлены через JavaScript -->
+            </div>
+            
+            <button class="test-btn" id="submit-test"><i class="fas fa-magic"></i> Узнать результат</button>
+            
+            <div class="result" id="result">
+                <!-- Результат будет показан здесь -->
+            </div>
+        </section>
+        
+        <footer>
+            <p>© 2023 Обзор нейросетей для генерации изображений | Информация актуальна на ноябрь 2023 года</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Данные о 4 нейросетях с указанными вами изображениями
+        const neuralNetworks = [
+            {
+                id: 1,
+                name: "Midjourney",
+                description: "Лидер в создании художественных изображений и цифрового искусства. Особенно известна своей способностью создавать работы в различных художественных стилях с потрясающей детализацией.",
+                imageUrl: "https://img.freepik.com/premium-psd/colorful-balloons-flying-air-blue-background-with-bokeh-copy-space-birthday-party_1169094-1635.jpg?semt=ais_hybrid&w=740&q=80",
+                users: "16.5 млн",
+                pros: [
+                    "Лучшее качество художественных изображений",
+                    "Превосходная работа с художественными стилями",
+                    "Активное сообщество и постоянные обновления",
+                    "Идеальна для концепт-арта и иллюстраций"
+                ],
+                cons: [
+                    "Работает только через Discord-бота",
+                    "Платный после ограниченного пробного периода",
+                    "Сложность в контроле конкретных деталей",
+                    "Высокая стоимость для активного использования"
+                ]
+            },
+            {
+                id: 2,
+                name: "DALL-E 3",
+                description: "Нейросеть от OpenAI с безупречным пониманием текстовых запросов. Интегрирована с ChatGPT, что позволяет уточнять и детализировать описания в диалоговом режиме.",
+                imageUrl: "https://img.freepik.com/premium-photo/ai-generative-jpeg-image_847288-1947.jpg",
+                users: "11.2 млн",
+                pros: [
+                    "Лучшее понимание сложных текстовых запросов",
+                    "Интеграция с ChatGPT для диалогового уточнения",
+                    "Высокое качество генерации реалистичных изображений",
+                    "Удобный веб-интерфейс без дополнительных программ"
+                ],
+                cons: [
+                    "Ограниченное количество бесплатных запросов",
+                    "Строгие контент-фильтры ограничивают творчество",
+                    "Требует подписки ChatGPT Plus",
+                    "Менее художественный подход по сравнению с Midjourney"
+                ]
+            },
+            {
+                id: 3,
+                name: "Stable Diffusion",
+                description: "Открытая нейросеть с максимальной свободой настройки. Может работать локально на вашем компьютере, предоставляя полный контроль над процессом генерации.",
+                imageUrl: "https://as2.ftcdn.net/jpg/06/23/32/25/1000_F_623322580_UDUQ6exrUenEbZNfNnsgBp9d3LStvCXp.jpg",
+                users: "22.3 млн",
+                pros: [
+                    "Полностью бесплатная и с открытым исходным кодом",
+                    "Возможность локального запуска без интернета",
+                    "Тысячи пользовательских моделей и настроек",
+                    "Полный контроль над каждым аспектом генерации"
+                ],
+                cons: [
+                    "Требует мощного компьютера для локального использования",
+                    "Высокий порог входа для новичков",
+                    "Качество сильно зависит от выбранной модели",
+                    "Требует технических знаний для настройки"
+                ]
+            },
+            {
+                id: 4,
+                name: "Adobe Firefly",
+                description: "Профессиональное решение от Adobe, идеально интегрированное в экосистему Creative Cloud. Создана с учетом потребностей дизайнеров и коммерческого использования.",
+                imageUrl: "https://i.pinimg.com/736x/b1/05/61/b1056151e62c727be784143f7e2477ce.jpg",
+                users: "9.8 млн",
+                pros: [
+                    "Прямая интеграция с Photoshop и Illustrator",
+                    "Полная безопасность для коммерческого использования",
+                    "Высокое качество профессиональных результатов",
+                    "Инструменты для точного редактирования и доработки"
+                ],
+                cons: [
+                    "Требует подписки Adobe (от $20/месяц)",
+                    "Меньше творческой свободы по сравнению с другими",
+                    "Ограниченный набор стилей генерации",
+                    "Не подходит для разовых или личных проектов из-за стоимости"
+                ]
+            }
+        ];
+
+        // Вопросы для теста
+        const testQuestions = [
+            {
+                id: 1,
+                question: "Какой тип изображений вы хотите создавать?",
+                options: [
+                    { text: "Художественные работы и иллюстрации", scores: [5, 2, 3, 1] },
+                    { text: "Реалистичные фотоизображения", scores: [2, 5, 3, 3] },
+                    { text: "Дизайны для коммерческих проектов", scores: [1, 3, 2, 5] },
+                    { text: "Эксперименты и нестандартные идеи", scores: [3, 2, 4, 1] }
+                ]
+            },
+            {
+                id: 2,
+                question: "Какой у вас опыт работы с нейросетями?",
+                options: [
+                    { text: "Новичок, хочу простой интерфейс", scores: [4, 5, 1, 4] },
+                    { text: "Имею небольшой опыт", scores: [4, 4, 2, 3] },
+                    { text: "Опытный пользователь", scores: [4, 3, 4, 4] },
+                    { text: "Технарь, люблю настраивать всё сам", scores: [2, 2, 5, 2] }
+                ]
+            },
+            {
+                id: 3,
+                question: "Какой бюджет вы готовы выделить?",
+                options: [
+                    { text: "Бесплатно или минимальные траты", scores: [2, 2, 5, 1] },
+                    { text: "Готов платить умеренную сумму", scores: [4, 4, 3, 3] },
+                    { text: "Бюджет не важен, главное - качество", scores: [5, 5, 3, 5] },
+                    { text: "Готов инвестировать в профессиональный инструмент", scores: [3, 3, 2, 5] }
+                ]
+            },
+            {
+                id: 4,
+                question: "Для каких целей вы будете использовать нейросеть?",
+                options: [
+                    { text: "Личное творчество и хобби", scores: [5, 4, 4, 2] },
+                    { text: "Профессиональная деятельность", scores: [4, 4, 3, 5] },
+                    { text: "Обучение и эксперименты", scores: [3, 3, 5, 2] },
+                    { text: "Коммерческие проекты", scores: [2, 3, 2, 5] }
+                ]
+            }
+        ];
+
+        // Заполнение карточек нейросетей
+        function renderNetworks() {
+            const container = document.getElementById('networks');
+            container.innerHTML = '';
+            
+            neuralNetworks.forEach(network => {
+                const networkCard = document.createElement('div');
+                networkCard.className = 'network-card';
+                
+                networkCard.innerHTML = `
+                    <div class="network-header">
+                        <h3><i class="fas fa-palette feature-icon"></i> ${network.name}</h3>
+                        <p>${network.description}</p>
+                    </div>
+                    <div class="network-body">
+                        <img src="${network.imageUrl}" alt="Пример работы ${network.name}" class="network-image">
+                        
+                        <div class="stats">
+                            <div class="stats-item">
+                                <div class="stats-value">${network.users}</div>
+                                <div>активных пользователей</div>
+                            </div>
+                            <div class="stats-item">
+                                <div class="stats-value">${network.id === 3 ? '5/5' : network.id === 4 ? '4/5' : '4/5'}</div>
+                                <div>гибкость настроек</div>
+                            </div>
+                            <div class="stats-item">
+                                <div class="stats-value">${network.id === 3 ? 'Бесплатно' : 'Платно'}</div>
+                                <div>стоимость</div>
+                            </div>
+                        </div>
+                        
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <h4><i class="fas fa-check-circle"></i> Преимущества</h4>
+                                <ul>
+                                    ${network.pros.map(pro => `<li>${pro}</li>`).join('')}
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h4><i class="fas fa-times-circle"></i> Недостатки</h4>
+                                <ul>
+                                    ${network.cons.map(con => `<li>${con}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(networkCard);
+            });
+        }
+
+        // Заполнение вопросов теста
+        function renderTestQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+            
+            testQuestions.forEach((question, index) => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question';
+                questionElement.id = `question-${question.id}`;
+                
+                let optionsHTML = '';
+                question.options.forEach((option, optionIndex) => {
+                    optionsHTML += `
+                        <div class="option" data-question="${question.id}" data-option="${optionIndex}">
+                            ${option.text}
+                        </div>
+                    `;
+                });
+                
+                questionElement.innerHTML = `
+                    <h3>${index + 1}. ${question.question}</h3>
+                    <div class="options">
+                        ${optionsHTML}
+                    </div>
+                `;
+                
+                container.appendChild(questionElement);
+            });
+            
+            // Добавляем обработчики событий для выбора ответов
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const questionId = this.getAttribute('data-question');
+                    const optionIndex = this.getAttribute('data-option');
+                    
+                    // Убираем выделение с других вариантов в этом вопросе
+                    document.querySelectorAll(`[data-question="${questionId}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Выделяем выбранный вариант
+                    this.classList.add('selected');
+                    
+                    // Сохраняем выбранный ответ
+                    this.setAttribute('data-selected', 'true');
+                });
+            });
+        }
+
+        // Обработка результатов теста
+        function calculateResult() {
+            const scores = [0, 0, 0, 0]; // Итоговые баллы для каждой нейросети
+            let allAnswered = true;
+            
+            // Проверяем, ответил ли пользователь на все вопросы
+            testQuestions.forEach(question => {
+                const selectedOption = document.querySelector(`[data-question="${question.id}"][data-selected="true"]`);
+                if (!selectedOption) {
+                    allAnswered = false;
+                    return;
+                }
+                
+                const optionIndex = parseInt(selectedOption.getAttribute('data-option'));
+                const optionScores = question.options[optionIndex].scores;
+                
+                // Добавляем баллы к каждой нейросети
+                optionScores.forEach((score, index) => {
+                    scores[index] += score;
+                });
+            });
+            
+            if (!allAnswered) {
+                alert('Пожалуйста, ответьте на все вопросы перед тем, как узнать результат.');
+                return;
+            }
+    
+            // Находим нейросеть с максимальным количеством баллов
+            let maxScore = Math.max(...scores);
+            let recommendedNetworkIndex = scores.indexOf(maxScore);
+            let recommendedNetwork = neuralNetworks[recommendedNetworkIndex];
+            
+            // Формируем описание результата
+            let description = "";
+            
+            switch(recommendedNetworkIndex) {
+                case 0:
+                    description = "Midjourney — лучший выбор для создания художественных изображений. Эта нейросеть создаёт потрясающие иллюстрации в любом стиле, от классической живописи до футуристического дизайна. Идеальна для концепт-арта, обложек книг и творческих проектов.";
+                    break;
+                case 1:
+                    description = "DALL-E 3 — лидер в точности понимания текстовых запросов. Создаёт реалистичные изображения, точно соответствующие описанию. Особенно удобна в связке с ChatGPT для уточнения деталей. Идеальна для создания иллюстраций по точным техническим заданиям.";
+                    break;
+                case 2:
+                    description = "Stable Diffusion — выбор для технически подкованных пользователей, которые ценят свободу. Может работать локально и предлагает полный контроль над процессом генерации. Идеальна для экспериментов, обучения и создания уникального контента.";
+                    break;
+                case 3:
+                    description = "Adobe Firefly — профессиональное решение для дизайнеров и коммерческих проектов. Безупречно интегрируется с Photoshop и другими инструментами Adobe. Идеальна для профессиональных дизайнеров, маркетологов и коммерческого использования.";
+                    break;
+            }
+            
+            // Показываем результат
+            const resultElement = document.getElementById('result');
+            resultElement.innerHTML = `
+                <h3><i class="fas fa-star"></i> Рекомендованная нейросеть для вас:</h3>
+                <div class="result-network">${recommendedNetwork.name}</div>
+                <p class="result-description">${description}</p>
+                <p>Эта нейросеть набрала <strong>${maxScore} баллов</strong> из 20 возможных по вашим ответам.</p>
+                <button class="restart-btn" id="restart-test"><i class="fas fa-redo"></i> Пройти тест заново</button>
+            `;
+            
+            resultElement.style.display = 'block';
+            
+            // Добавляем обработчик для кнопки перезапуска
+            document.getElementById('restart-test').addEventListener('click', restartTest);
+            
+            // Прокручиваем страницу к результату
+            resultElement.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Перезапуск теста
+        function restartTest() {
+            // Сбрасываем выделение ответов
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('selected');
+                option.removeAttribute('data-selected');
+            });
+            
+            // Скрываем результат
+            document.getElementById('result').style.display = 'none';
+            
+            // Прокручиваем к началу теста
+            document.querySelector('.test-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Инициализация страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            renderNetworks();
+            renderTestQuestions();
+            
+            // Обработчик для кнопки отправки теста
+            document.getElementById('submit-test').addEventListener('click', calculateResult);
+        });
+    </script>
+</body>
+</html>
